@@ -1,0 +1,11 @@
+{
+  "name": "healthcheck-lambda",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:YutaMonb/healthcheck-lambda.git",
+  "author": "yutamonb <yutamonb@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.395.0"
+  }
+}
