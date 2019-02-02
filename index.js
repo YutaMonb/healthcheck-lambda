@@ -4,18 +4,18 @@ const slackPath = process.env.SLACKPATH;
 
 exports.handler = (event, context, callback) => {
   if (!target) {
-    callback('target undefined');
+    callback(null, 'target undefined');
     return;
   }
 
   https.get(target, res => {
     console.log(res.statusCode);
     if (res.statusCode == 200) {
-      callback('statusCode 200');
+      callback(null, 'statusCode 200');
       return;
     }
     postSlack(res.statusCode);
-    callback('slack post');
+    callback(null, 'slack post');
   });
 };
 
