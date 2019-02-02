@@ -2,7 +2,7 @@ const https = require('https');
 const target = process.env.TARGET;
 const slackPath = process.env.SLACKPATH;
 
-exports.handler = async (event, context, callback) => {
+exports.handler = (event, context, callback) => {
   if (!target) {
     callback('target undefined');
     return;
