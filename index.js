@@ -1,38 +1,39 @@
-const https = require("https");
+const https = require('https');
 const target = process.env.TARGET;
 const slackPath = process.env.SLACKPATH;
 
 exports.handler = async (event, context, callback) => {
   if (!target) {
-    callback("target undefined");
+    callback('target undefined');
     return;
   }
 
   https.get(target, res => {
     console.log(res.statusCode);
     if (res.statusCode == 200) {
-      callback("statusCode 200");
+      callback('statusCode 200');
       return;
     }
     postSlack(res.statusCode);
+    callback('slack post');
   });
 };
 
 function postSlack(statusCode) {
   const data = JSON.stringify({
-    username: "HealthCheck",
+    username: 'HealthCheck',
     text: `${target} ${statusCode}`,
-    icon_emoji: ":male-police-officer:"
+    icon_emoji: ':male-police-officer:'
   });
 
   const options = {
-    hostname: "hooks.slack.com",
+    hostname: 'hooks.slack.com',
     port: 443,
     path: slackPath,
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      "Content-Length": Buffer.byteLength(data)
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(data)
     }
   };
 
