@@ -1,14 +1,15 @@
-const https = require('https');
+//@ts-check
+const request = require('request');
 const target = process.env.TARGET;
 const slackPath = process.env.SLACKPATH;
 
 exports.handler = (event, context, callback) => {
-  if (!target) {
-    callback(null, 'target undefined');
+  if (!target || !slackPath) {
+    callback(null, 'env undefined.');
     return;
   }
 
-  https.get(target, res => {
+  request.get(target, (error, res, body) => {
     console.log(res.statusCode);
     if (res.statusCode == 200) {
       callback(null, 'statusCode 200');
@@ -27,20 +28,20 @@ function postSlack(statusCode) {
   });
 
   const options = {
-    hostname: 'hooks.slack.com',
-    port: 443,
-    path: slackPath,
-    method: 'POST',
+    uri: slackPath,
     headers: {
-      'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(data)
+      'Content-type': 'application/json'
+    },
+    json: {
+      data
     }
   };
 
-  const request = https.request(options, res => {
-    console.log(`Slack POST: ${res.statusCode}`);
+  request.post(options, (error, response, body) => {
+    console.log(error);
+    if (response.statusCode === 200) {
+      console.log('wei');
+    }
+    console.log(response.statusCode);
   });
-
-  request.write(data);
-  request.end();
 }

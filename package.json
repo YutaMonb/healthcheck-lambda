@@ -6,7 +6,8 @@
   "author": "yutamonb <yutamonb@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.395.0"
+    "aws-sdk": "^2.395.0",
+    "request": "^2.88.0"
   },
   "scripts": {
     "test": "echo test skip"
