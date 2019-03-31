@@ -21,27 +21,20 @@ exports.handler = (event, context, callback) => {
 };
 
 function postSlack(statusCode) {
-  const data = JSON.stringify({
-    username: 'HealthCheck',
-    text: `${target} ${statusCode}`,
-    icon_emoji: ':male-police-officer:'
-  });
-
   const options = {
     uri: slackPath,
     headers: {
       'Content-type': 'application/json'
     },
     json: {
-      data
+      username: 'HealthCheck',
+      text: `${target} ${statusCode}`,
+      icon_emoji: ':male-police-officer:'
     }
   };
 
   request.post(options, (error, response, body) => {
-    console.log(error);
-    if (response.statusCode === 200) {
-      console.log('wei');
-    }
-    console.log(response.statusCode);
+    if (response.statusCode === 200) console.log('slack post.');
+    else console.error(`slack post error. ${response.statusCode}`);
   });
 }
